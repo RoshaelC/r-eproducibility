@@ -1,0 +1,102 @@
+---
+title: "BIOL 432 - R-eproducibility"
+author: "Roshael Chellappah (20103016)"
+date: "26/01/2022"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+**Project Information**  
+git hub username: RoshaelC  
+git hub repository: https://github.com/RoshaelC/r-eproducibility.git  
+
+## Project Set Up
+```{r echo=FALSE}
+library(dplyr)
+data <- read.csv("./InputData/FallopiaData.csv")
+```
+
+## Dataset Prep
+Remove rows with "Total" biomass < 60
+```{r}
+MyData <- subset(data, Total > 60)
+```
+
+Reorder the columns in the order "Total", "Taxon", "Scenario", "Nutrients" and remove other columns
+```{r}
+colnames(MyData) #identify what the current column names are
+
+MyData <- transmute(MyData, Total, Taxon, Scenario, Nutrients) #transmute = mutate() + select()
+colnames(MyData)
+```
+
+Replace "Total" with new column with "TotalG", converting values from mg to g
+```{r}
+MyData <- transmute(MyData, TotalG = Total*0.001, Taxon, Scenario, Nutrients) # 1 mg is 0.001 g
+```
+
+## Custom Function  
+Write a custom function that will take two inputs from the user:  
+1. a vector of data to process (e.g., column from a data.frame object)  
+2. a string that defines what calculation to perform  
+  - if string #2 is "Average" then calculate the average value for the column named in vector #1  
+  - if s2 is "Sum" then calculate the sum of values for the column named in v1  
+  - if s2 is "Observations" then count the number of observed values for the column named in v1  
+  - if s2 is anything else, then outut an error to the user  
+```{r}
+
+my.function <- function(datacol = 0, calc = 0){
+  cat("\n**User input** \nvector data:", datacol, "\ncalculation:", calc, "\n")
+  
+  if (calc == "Average"){
+    cat("\nCalculating average...\n")
+    mean <- mean(datacol)
+    return(average = mean)
+  }
+  
+  else if (calc == "Sum"){
+    cat("\nCalculating sum...\n")
+    sumvector <- sum(datacol)
+    return(sum = sumvector)
+  }
+  
+  else if (calc == "Observations"){
+    cat("\nCalculating number of observations...\n")
+    obs <- NROW(datacol)
+    return(observations = obs)
+  }
+  
+  else{
+    cat("\nUnrecognized calculation, please use 'Average', 'Sum' or 'Observations'...\n")
+  }
+}
+```
+
+  
+Write some R code that uses your function to count the total number of observations in the "Taxon" column
+```{r}
+my.function(datacol = MyData$Taxon, calc = "Observations")
+```
+
+
+Write some R code that uses your function to calculate the average TotalG for each of the two Nutrient concentrations
+```{r}
+
+WData <- MyData %>% 
+  group_by(Nutrients) %>% #groups MyData by Nutrient values 'high' and 'low'
+  summarize("Average TotalG" = my.function(datacol = TotalG, calc = "Average")) #summarizes the results of my.function() calculating TotalG averages for 'high' vs. 'low' Nutrient observations
+
+WData
+```
+
+Write (i.e., save) the new data to a file called "WrangledData.csv" in the Output folder.
+```{r}
+write.csv(WData, "./Output/WrangledData.csv")
+```
+
+  
+  
+  
+  
+  
