@@ -12,7 +12,7 @@ git hub username: RoshaelC
 git hub repository: https://github.com/RoshaelC/r-eproducibility.git  
 
 ## Project Set Up
-```{r echo=FALSE}
+```{r}
 library(dplyr)
 data <- read.csv("./InputData/FallopiaData.csv")
 ```
