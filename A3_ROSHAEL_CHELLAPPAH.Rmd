@@ -1,10 +1,10 @@
----
+= = = = = = = = = = = ---
 title: "BIOL 432 - R-eproducibility"
 author: "Roshael Chellappah (20103016)"
 date: "26/01/2022"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 **Project Information**  
