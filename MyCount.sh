@@ -11,11 +11,14 @@
 
 #!/bin/bash
 
-for count in (1..20)
+  
+for count in {1..20}
 do
-  if [$count = (0..9)]
-    echo "$count is a single-digit number"
-  elif [$count = (10..20)]
-    echo "$count is a double-digit number"
-  fi
+if [ $count -lt 10 ]
+then
+        echo "$count is a single-digit number"
+elif [ $count -gt 9 ]
+then
+        echo "$count is a double-digit number"
+fi
 done
