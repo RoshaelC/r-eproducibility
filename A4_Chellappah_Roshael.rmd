@@ -1,0 +1,39 @@
+---
+title: "Regex.Rmd"
+author: "Roshael Chellappah (20103016)"
+date: "02/02/2022"
+output: html_document
+---
+
+```{r}
+library(dplyr)
+getwd()
+```
+
+Part I: Data Science
+```{r}
+MData <- read.csv(
+  "C:/Users/rosch/Documents/BIOL 432/Week 1 - Introduction/A1_CHELLAPPAH_ROSHAEL.csv")
+```
+
+1. Add new coloumn called "Sp" that shortens the genus name in the "Organism" column to only the first letter and period (i.e., Homo sapiens -> H. sapiens)
+```{r}
+MData <- mutate(MData, Sp = gsub("[a-z]\\w+\\s", "\\. ", Organism))
+
+# gsub() is the function to find and replace data
+# [a-z] identifies all lower case letters (disregards upper case)
+# \\w+ identifies strings of any character that is a letter or digit 
+# \\s identifies spaces
+# \\. replaces the identified string characters with a "."
+```
+
+2. Create a new dataset BUT with "Sp" column where "Organism" column is, and remove "Organism" column
+```{r}
+MData <- transmute(MData, Sp, Limb.width, Limb.length, Observer)
+```
+
+3. Save the dataset as a new file called "MeasShort.csv"
+```{r}
+write.csv(MData, "./MeasShort.csv")
+```
+
