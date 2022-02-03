@@ -5,12 +5,16 @@ date: "02/02/2022"
 output: html_document
 ---
 
+**Project Set-Up**  
+git hub username: RoshaelC  
+git hub repository: https://github.com/RoshaelC/r-eproducibility.git  
+
 ```{r}
 library(dplyr)
 getwd()
 ```
 
-Part I: Data Science
+# Part I: Data Science
 ```{r}
 MData <- read.csv(
   "C:/Users/rosch/Documents/BIOL 432/Week 1 - Introduction/A1_CHELLAPPAH_ROSHAEL.csv")
@@ -37,5 +41,5 @@ MData <- transmute(MData, Sp, Limb.width, Limb.length, Observer)
 write.csv(MData, "./MeasShort.csv")
 ```
 
-# Part II: BASH
-See .txt file "MyCount.txt"
+# Part II: Bash
+See .txt file "A4_Chellappah_Roshael.txt"
