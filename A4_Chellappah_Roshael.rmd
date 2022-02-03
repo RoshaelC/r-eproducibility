@@ -37,3 +37,5 @@ MData <- transmute(MData, Sp, Limb.width, Limb.length, Observer)
 write.csv(MData, "./MeasShort.csv")
 ```
 
+# Part II: BASH
+See .txt file "MyCount.txt"
